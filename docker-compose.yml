@@ -1,0 +1,16 @@
+services:
+  film-api:
+    build: .
+    container_name: film-frame-api
+    ports:
+      - "8000:8000"
+    environment:
+      FILM_DB_PATH: /data/film_archive.db
+      # 启动时幂等写入一卷示例数据，便于直接在 Swagger 试单
+      SEED_SAMPLE: "1"
+    volumes:
+      - film-data:/data
+    restart: unless-stopped
+
+volumes:
+  film-data:
